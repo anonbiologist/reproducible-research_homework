@@ -2,8 +2,19 @@
 
 \# INSERT ANSWERS HERE #
 
+The random walk function generates a random walk trajectory.
+
+It starts at the coordinates (0, 0), and generates a random angle for each step, for a given number of steps. Each point of the random walk is coloured according to the time step, to produce a traceable colour gradient.
+
 ![random_walk](https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/5ccb1566-61c7-4563-a741-9d0ed6dbeb60)
 
+The two plots show two separate random walks, each with 500 steps.
+
+As the angle of movement for each time step is random, the overall pattern produced is also random and erratic. For both plots, there appears to be some regions that are more densely clustered whilst others are more dispersed. 
+
+For the two graphs shown above, although their movement is erratic, they do both appear to exhibit an overall trend from start to finish. The first plot is tending towards (-x, -y) coordinates, and the second plot is tending towards (+x, -y) coordinates. It is certain that these 'trends' have formed due to chance alone.
+
+As well as this, if many plots of the random walk were generated, although individual plots would vary highly in final position, the average final position across all plots would tend towards the starting point.
 
 
 
