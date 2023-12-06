@@ -4,7 +4,7 @@
 
 The random walk function generates a random walk trajectory.
 
-It starts at the coordinates (0, 0), and generates a random angle for each step, for a given number of steps. Each point of the random walk is coloured according to the time step, to produce a traceable colour gradient.
+It starts at the coordinates (0, 0), and generates a random angle for each step of fixed size (0.25 units), for a given number of steps. Each point of the random walk is coloured according to the time step, to produce a traceable colour gradient.
 
 ![random_walk](https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/5ccb1566-61c7-4563-a741-9d0ed6dbeb60)
 
