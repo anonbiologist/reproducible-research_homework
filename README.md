@@ -48,6 +48,91 @@ To fit a linear model to an allometric equation, a log transformation is require
 
 By taking the natural logarithm of both sides of the equation, a linear equation is formed.
 
+3)
+
+Install and load packages
+```{r}
+install.packages(c("dplyr", "janitor", "ggplot2"))
+
+library(dplyr)
+library(janitor)
+library(ggplot2)
+```
+Load data
+```{r}
+virus_data <- Cui_etal2014
+```
+Define function to clean column names
+```{r}
+clean_column_names <- function(virus_data) {
+  virus_data %>%
+    clean_names()
+}
+```
+Apply cleaning function to data
+```{r}
+virus_data_clean <- virus_data %>% 
+  clean_column_names()
+```
+
+Apply log transformation to volume and genome length
+```{r}
+virus_data_clean$log_virion_volume_nm_nm_nm <- log(virus_data_clean$virion_volume_nm_nm_nm)
+virus_data_clean$log_genome_length_kb <- log(virus_data_clean$genome_length_kb)
+```
+
+To find α & β, run linear model on log-transformed data
+```{r}
+virus_data_lm <- lm(log_virion_volume_nm_nm_nm ~ log_genome_length_kb, data = virus_data_clean)
+```
+Save summary as object
+```{r}
+summary <- summary(virus_data_lm)
+```
+Extract α & β
+```{r}
+alpha <- coef(virus_data_lm)[2]
+beta <- exp(coef(virus_data_lm)[1])
+```
+Extract p-values for α & β
+```{r}
+p_values <- summary$coefficients[, "Pr(>|t|)"]
+```
+Print results
+```{r}
+print(alpha) # 1.515228 
+print(beta) # 1181.807
+print(p_values) #  2.279645e-10, 6.438498e-10 
+```
+Both statistically significant, (p < 0.05)
+
+Values from table 2:
+alpha = 1.43 CI: (1.26-1.6)
+beta = 2057 CI: (1185-3571)
+
+Our value for alpha falls within CI, so does not significantly differ
+Our value for beta falls below the lower bound of the CI, so does significantly differ
+
+
+Write code to reproduce figure
+```{r}
+ggplot(virus_data_clean, aes(x = log_genome_length_kb, y = log_virion_volume_nm_nm_nm)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "blue") +  # Add linear regression line
+  labs(
+    x = "Log [Genome length (kb)]",
+    y = "Log [Virion Volume (nm3)]"
+  ) +
+  theme_bw() 
+```
+
+Estimate volume of a 300 kb dsDNA virus
+```{r}
+volume <- beta * (300 ^ alpha) # 6698076
+```
+
+![virus plot](https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/60820cb0-fd15-4f6c-b8c7-63536d31be41)
+
 
 
 
