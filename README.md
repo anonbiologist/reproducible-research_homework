@@ -141,8 +141,20 @@ ggplot(virus_data_clean, aes(x = log_genome_length_kb, y = log_virion_volume_nm_
 volume <- beta * (300 ^ alpha) # 6698076
 ```
 
+Bonus question: 
 
+_Explain the difference between reproducibility and
+replicability in scientific research. How can git and GitHub be used to enhance the reproducibility and replicability of your work? what limitations
+do they have?_
 
+Reproducibility describes the ability to regenerate the same results when applying the same methods used in the original study to the original dataset. Replicability describes the ability to arrive at the same scientific conclusions when applying the same methods used in the original study to a new dataset. 
+Reproducibility focuses on whether the results of the original analysis can be replicated by using the same methods, and therefore tests whether the analysis has been conducted accurately. On the other hand, replicability focuses on whether the methods of the original study can be re-used with a new dataset to yield similar results, and therefore tests the reliability of original study.
+
+It is therefore not always the case that the two come hand in hand, as a study could have reproducible methodology but non-replicable results. The reverse argument is also true, as the methodology may not be reproducible but the results are reliable.
+
+Git enhances reproducibility by tracking changes made to code, with each commit representing a stage in the code development. This allows users to follow the methods of the original study by revisiting the code at different stages, which provides insight into thought process behind the final method. GitHub then provides a platform to share the methodology with independent researchers, who can run the code on the original dataset separately and test its accuracy. Git and GitHub aid replicability in the same way, in that the development of the method can be traced via commit history, and the method code can be shared via the GitHub platform. Finally, branches and forks can make the process of reusing the method code and original dataset easier, as they can both be duplicated by future researchers, which allows for modification and the testing of alternate hypotheses, without altering the original code or data.
+
+Despite the importance of Git/GitHub in enhancing both reproducibility and replicability, there are limitations that must be considered. Firstly, access to GitHub's more advanced features comes at a financial cost. GitHub also has a steep learning curve, and so future researchers who aim to use the methods or data from an original study may struggle to do so accurately or efficiently. This is because some features, such as pushing R code to a repository, are not intuitive and rather laborious. As well as this, GitHub caps both file and repository size, which limits the size of datasets and the number of files that can be published. Therefore, larger studies might not be shared concisely, if they were to be split across multiple repositories.
 
 
 
