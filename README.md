@@ -39,8 +39,9 @@ To summarise, a random seed is a number inputted into a PSNG. By choosing the sa
 
 1) _How many rows and columns does the table have?_
 
-Rows = 33
-Columns = 13
+- Rows = 33
+  
+- Columns = 13
 
 
 2) _What transformation can you use to fit a linear model to the data?_
