@@ -73,7 +73,7 @@ clean_column_names <- function(virus_data) {
     clean_names()
 }
 ```
-Apply a cleaning function to the virus data.
+Apply the cleaning function to the virus data.
 ```{r}
 virus_data_clean <- virus_data %>% 
   clean_column_names()
@@ -107,8 +107,11 @@ print(beta) # 1181.807
 print(p_values) #  2.279645e-10, 6.438498e-10 
 ```
 - α = 1.515228 (1.52)
+   
 - β = 1181.807 (1182)
+
 - α p-value = 2.279645e-10 (2.3e-10)
+
 - β p-value = 6.438498e-10 (6.4e-10)
 
 Therefore, they are both statistically significant, (p < 0.05)
