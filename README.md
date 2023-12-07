@@ -117,13 +117,11 @@ print(p_values) #  2.279645e-10, 6.438498e-10
 Therefore, they are both statistically significant, (p < 0.05)
 
 The values from table 2 are as follows:
-alpha = 1.43, Confidence Interval = 1.26-1.6
-beta = 2057, Confidence Interval = 1185-3571
+- alpha = 1.43, Confidence Interval = 1.26-1.6
 
-Our value for alpha (1.52) falls within the confidence interval (1.26-1.6) of the Table 2 value, so does not significantly differ.
-Our value for beta (1182) falls below the lower bound of the confidence interval (1185-3571) of the Table 2 value, so does significantly differ. 
+- beta = 2057, Confidence Interval = 1185-3571
 
-Therefore, the findings of our model are consistent with the findings of the paper for the exponent, but not for the scaling factor.
+Our value for alpha (1.52) falls within the confidence interval (1.26-1.6) of the Table 2 value, so does not significantly differ. Our value for beta (1182) falls below the lower bound of the confidence interval (1185-3571) of the Table 2 value, so does significantly differ. Therefore, the findings of our model are consistent with the findings of the paper for the exponent, but not for the scaling factor.
 
 4) _Write the code to reproduce the figure below_
 ```{r}
