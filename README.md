@@ -52,7 +52,6 @@ To fit a linear model to an allometric equation, a log transformation is require
 
 By taking the natural logarithm of both sides of the equation, a linear equation is formed.
 
-
 3)
 
 Install and load the packages.
