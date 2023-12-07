@@ -20,6 +20,7 @@ For the two graphs shown above, although they were generated using identical cod
 
 As well as this, if many plots of the random walk were generated, although individual plots would vary highly in final position, the average final position across all plots would tend towards the starting point.
 
+
 2) Random seeds
 
 A random seed is a number that is used to initialise a pseudorandom number generator (PSNG). A PSNG is an algorithm that generates a sequence of numbers that approximates and therefore resembles a true sequence of random numbers. 
@@ -33,12 +34,14 @@ Therefore, a random seed is a number provided to a PSNG. By choosing the same se
 
 <img width="903" alt="brownian motion edits" src="https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/49713e4c-666f-4bea-87b6-940291f7f7cc">
 
+
 # QUESTION 5
 
 1) _How many rows and columns does the table have?_
 
 Rows = 33
 Columns = 13
+
 
 2) _What transformation can you use to fit a linear model to the data?_
 
@@ -48,9 +51,10 @@ To fit a linear model to an allometric equation, a log transformation is require
 
 By taking the natural logarithm of both sides of the equation, a linear equation is formed.
 
+
 3)
 
-Install and load packages
+Install and load the packages.
 ```{r}
 install.packages(c("dplyr", "janitor", "ggplot2"))
 
@@ -58,80 +62,85 @@ library(dplyr)
 library(janitor)
 library(ggplot2)
 ```
-Load data
+Load the virus data. 
 ```{r}
 virus_data <- Cui_etal2014
 ```
-Define function to clean column names
+Define a function to clean up column names, using the clean_names() function from janitor package. 
 ```{r}
 clean_column_names <- function(virus_data) {
   virus_data %>%
     clean_names()
 }
 ```
-Apply cleaning function to data
+Apply a cleaning function to the virus data.
 ```{r}
 virus_data_clean <- virus_data %>% 
   clean_column_names()
 ```
-
-Apply log transformation to volume and genome length
+Apply a log transformation to volume and genome length.
 ```{r}
 virus_data_clean$log_virion_volume_nm_nm_nm <- log(virus_data_clean$virion_volume_nm_nm_nm)
 virus_data_clean$log_genome_length_kb <- log(virus_data_clean$genome_length_kb)
 ```
-
-To find α & β, run linear model on log-transformed data
+To find the exponent (α) & scaling factor (β), run a linear model on the log-transformed data.
 ```{r}
 virus_data_lm <- lm(log_virion_volume_nm_nm_nm ~ log_genome_length_kb, data = virus_data_clean)
 ```
-Save summary as object
+Save the summary of the linear model as an object.
 ```{r}
 summary <- summary(virus_data_lm)
 ```
-Extract α & β
+Extract α & β.
 ```{r}
 alpha <- coef(virus_data_lm)[2]
 beta <- exp(coef(virus_data_lm)[1])
 ```
-Extract p-values for α & β
+Extract the p-values for α & β.
 ```{r}
 p_values <- summary$coefficients[, "Pr(>|t|)"]
 ```
-Print results
+Print the values for α & β, and their respective p-values.
 ```{r}
 print(alpha) # 1.515228 
 print(beta) # 1181.807
 print(p_values) #  2.279645e-10, 6.438498e-10 
 ```
-Both statistically significant, (p < 0.05)
+α = 1.515228 (1.52)
+β = 1181.807 (1182)
+α p-value = 2.279645e-10 (2.3e-10)
+β p-value = 6.438498e-10 (6.4e-10)
 
-Values from table 2:
-alpha = 1.43 CI: (1.26-1.6)
-beta = 2057 CI: (1185-3571)
+Therefore, they are both statistically significant, (p < 0.05)
 
-Our value for alpha falls within CI, so does not significantly differ
-Our value for beta falls below the lower bound of the CI, so does significantly differ
+The values from table 2 are as follows:
+alpha = 1.43, Confidence Interval = 1.26-1.6
+beta = 2057, Confidence Interval = 1185-3571
 
+Our value for alpha (1.52) falls within the confidence interval (1.26-1.6) of the Table 2 value, so does not significantly differ.
+Our value for beta (1182) falls below the lower bound of the confidence interval (1185-3571) of the Table 2 value, so does significantly differ. 
 
-Write code to reproduce figure
+Therefore, the findings of our model are consistent with the findings of the paper for the exponent, but not for the scaling factor.
+
+4) _Write the code to reproduce the figure below_
 ```{r}
 ggplot(virus_data_clean, aes(x = log_genome_length_kb, y = log_virion_volume_nm_nm_nm)) +
   geom_point() +
-  geom_smooth(method = "lm", color = "blue") +  # Add linear regression line
+  geom_smooth(method = "lm", color = "blue") +  
   labs(
     x = "Log [Genome length (kb)]",
     y = "Log [Virion Volume (nm3)]"
   ) +
   theme_bw() 
 ```
+![virus plot](https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/60820cb0-fd15-4f6c-b8c7-63536d31be41)
 
-Estimate volume of a 300 kb dsDNA virus
+5) _Estimate the volume of a 300 kb dsDNA virus_
 ```{r}
 volume <- beta * (300 ^ alpha) # 6698076
 ```
 
-![virus plot](https://github.com/anonbiologist/reproducible-research_homework/assets/153086380/60820cb0-fd15-4f6c-b8c7-63536d31be41)
+
 
 
 
