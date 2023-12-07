@@ -1,0 +1,69 @@
+# Install and load packages
+install.packages(c("dplyr", "janitor", "ggplot2"))
+
+library(dplyr)
+library(janitor)
+library(ggplot2)
+
+# Load data
+virus_data <- Cui_etal2014
+
+# Define function to clean column names
+clean_column_names <- function(virus_data) {
+  virus_data %>%
+    clean_names()
+}
+
+# Apply cleaning function to data
+virus_data_clean <- virus_data %>% 
+  clean_column_names()
+
+# View clean data
+names(virus_data_clean)
+
+# Apply log transformation to volume and genome length
+virus_data_clean$log_virion_volume_nm_nm_nm <- log(virus_data_clean$virion_volume_nm_nm_nm)
+virus_data_clean$log_genome_length_kb <- log(virus_data_clean$genome_length_kb)
+
+# To find α & β, run linear model on log-transformed data
+virus_data_lm <- lm(log_virion_volume_nm_nm_nm ~ log_genome_length_kb, data = virus_data_clean)
+
+# Save summary as object
+summary <- summary(virus_data_lm)
+
+# Extract α & β
+alpha <- coef(virus_data_lm)[2]
+beta <- exp(coef(virus_data_lm)[1])
+
+# Extract p-values for α & β
+p_values <- summary$coefficients[, "Pr(>|t|)"]
+
+# Print results
+print(alpha) # 1.515228 
+print(beta) # 1181.807
+print(p_values) #  2.279645e-10, 6.438498e-10 
+
+# Both statistically significant, (p < 0.05)
+
+# Values from table 2:
+# alpha = 1.43 CI: (1.26-1.6)
+# beta = 2057 CI: (1185-3571)
+
+# Our value for alpha falls within CI, so does not significantly differ
+# Our value for beta falls below the lower bound of the CI, so does significantly differ
+
+# Write code to reproduce figure
+
+ggplot(virus_data_clean, aes(x = log_genome_length_kb, y = log_virion_volume_nm_nm_nm)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "blue") +  
+  labs(
+    x = "Log [Genome length (kb)]",
+    y = "Log [Virion Volume (nm3)]"
+  ) +
+  theme_bw() 
+
+# Estimate volume of a 300 kb dsDNA virus
+
+volume <- beta * (300 ^ alpha) # 6698076
+
