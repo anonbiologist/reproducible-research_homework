@@ -1,6 +1,7 @@
 # Reproducible research: version control and R
 
-\# INSERT ANSWERS HERE #
+Link to logistic_growth repo:
+https://github.com/anonbiologist/logistic_growth.git
 
 # QUESTION 4
 
