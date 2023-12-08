@@ -144,6 +144,7 @@ ggplot(virus_data_clean, aes(x = log_genome_length_kb, y = log_virion_volume_nm_
 ```{r}
 volume <- beta * (300 ^ alpha) # 6698076
 ```
+volume = 6698076nm^3
 
 Bonus question: 
 
